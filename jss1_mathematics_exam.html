@@ -138,8 +138,10 @@
 </div>
 
 <script>
-  const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbw2kAnC6WtdbjV_Mwc53qJlipcUVNSjzILiOqrFDT_tsVoy7NiCLTwpAFUWmk-r-LJV3Q/exec';
-
+  // NEW URL from your latest Apps Script deployment
+  const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbx8xxHpRwIrpP0pUqpyxb-dQJMXt7lMAoxJT7F3plyUUYGkYZR4SFV9bgU4VCGFC_jg1w/exec';
+    //https://script.google.com/macros/s/AKfycbx8xxHpRwIrpP0pUqpyxb-dQJMXt7lMAoxJT7F3plyUUYGkYZR4SFV9bgU4VCGFC_jg1w/exec
+  //AKfycbx8xxHpRwIrpP0pUqpyxb-dQJMXt7lMAoxJT7F3plyUUYGkYZR4SFV9bgU4VCGFC_jg1w
   // ---------- QUESTION DATA ----------
   const questions = [
     { text: "What is the value of 7 × 8?", options: ["48", "56", "64", "72"] },
@@ -165,7 +167,7 @@
     p.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
     debugLog.appendChild(p);
     debugLog.scrollTop = debugLog.scrollHeight;
-    console.log(msg); // Also log to browser console
+    console.log(msg);
   }
 
   function renderCurrentQuestion() {
@@ -208,7 +210,6 @@
     }
   });
 
-  // Helper to show a user message
   function showMessage(msg, type) {
     messageDiv.textContent = msg;
     messageDiv.className = `message ${type}`;
@@ -218,12 +219,11 @@
     }, 5000);
   }
 
-  // Test connection: simple GET request to verify reachability
   async function testConnection() {
     addDebugLog(`🧪 Testing connection to: ${WEB_APP_URL}`);
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
+      const timeoutId = setTimeout(() => controller.abort(), 10000);
       const response = await fetch(WEB_APP_URL, { method: 'GET', signal: controller.signal });
       clearTimeout(timeoutId);
       addDebugLog(`✅ GET response status: ${response.status} ${response.statusText}`);
@@ -258,7 +258,7 @@
 
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 15000); // 15s timeout
+      const timeoutId = setTimeout(() => controller.abort(), 15000);
       const response = await fetch(WEB_APP_URL, {
         method: 'POST',
         mode: 'cors',
@@ -283,7 +283,6 @@
       if (result.status === 'success') {
         showMessage(`Exam submitted successfully! You scored ${result.score} out of ${result.total}.`, 'success');
         addDebugLog(`✅ Exam successful. Score: ${result.score}/5`);
-        // Disable further changes
         document.querySelectorAll('input[type="radio"]').forEach(r => r.disabled = true);
         prevBtn.disabled = true;
         nextBtn.disabled = true;
@@ -305,7 +304,6 @@
     }
   });
 
-  // Initialize
   renderCurrentQuestion();
   addDebugLog(`🎓 Exam page loaded. Web App URL: ${WEB_APP_URL}`);
   addDebugLog(`ℹ️ If you see "Failed to fetch", check: 1) URL is correct (/exec), 2) Apps Script deployed, 3) CORS headers set, 4) Network/firewall.`);
