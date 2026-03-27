@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="fav_icon2.ico">
-    <title>cbt.canaanlandmodelgroupofschools.org - MATHEMATICS Exam</title>
+    <title>cbt.wisdom foundationschools.org - JSS1 MATHEMATICS  Exam</title>
     <script>
          // Disable back navigation
     history.pushState(null, null, location.href);
@@ -106,7 +106,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('img/Ctemplogo.jpg') no-repeat center center;
+            background: url('img/wisdom_logo1.png') no-repeat center center;
             background-size: 300px 300px;
             opacity: 0.1;
             z-index: 0;
@@ -118,7 +118,7 @@
             background: #2c3e50;
         }
         #datetime {
-            color:blue;
+            color:gold;
             font-size: 18px;
             font-weight: bold;
             text-align: center;
@@ -135,7 +135,7 @@
         }
         #header {
             padding: 20px;
-            background: linear-gradient(to right,blue, fuchsia);
+            background: linear-gradient(to right, orange, purple);
             color: white;
             border-bottom: 5px solid #ff9800;
         }
@@ -468,22 +468,18 @@
             100% { opacity: 1; }
         }
 
-
-
-
-
          .marquee-container {
             width: 100%;
             overflow: hidden;
             white-space: nowrap;
-            background: aqua;
+            background: rgb(150,125,150);
             padding: 10px 0;
         }
     
         /* Moving text animation */
         .marquee-text {
             display: inline-block;
-            color: fuchsia;
+            color: gold;
             font-size: 24px;
             font-weight: bold;
             animation: marquee 10s linear infinite;
@@ -500,6 +496,84 @@
         }
 
 
+        /* Logo container - makes it a flex container for horizontal layout */
+#logo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    padding: 20px 0;
+}
+
+/* Style for the center/main logo */
+#logo img:not(.logo-left img):not(.logo-right img) {
+    max-width: 200px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+}
+
+/* Left logo container */
+.logo-left {
+    flex: 0 0 auto;
+    z-index: 1;
+    margin-left: 20px;
+}
+
+/* Right logo container */
+.logo-right {
+    flex: 0 0 auto;
+    z-index: 1;
+    margin-right: 20px;
+}
+
+/* Logo images inside left and right containers */
+.logo-left img,
+.logo-right img {
+    max-width: 100px;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+/* Hover effect for left and right logos */
+.logo-left img:hover,
+.logo-right img:hover {
+    transform: scale(1.1);
+}
+
+/* Responsive design for mobile */
+@media (max-width: 768px) {
+    #logo {
+        flex-direction: column;
+        gap: 15px;
+        padding: 10px 0;
+    }
+    
+    #logo img:not(.logo-left img):not(.logo-right img) {
+        position: static;
+        transform: none;
+        margin: 10px auto;
+    }
+    
+    .logo-left, .logo-right {
+        margin: 5px 0;
+    }
+    
+    .logo-left img,
+    .logo-right img {
+        max-width: 80px;
+    }
+}
+
+
+
     </style>
 </head>
 <body oncontextmenu="return false">
@@ -507,12 +581,13 @@
         <div id="logout-container">
             <button id="logout" onclick="logout()">Logout</button>
                  <div class="marquee-container">
-        <span class="marquee-text">CANAANLAND  GROUP OF SCHOOLS :  GOD IS OUR STRENGTH</span>
+        <span class="marquee-text">WISDOM FOUNDATION SCHOOLS  :  GATEWAY TO THE UNIVERSITY FOR YOUR CHILD </span>
     </div>
         </div>
         <div id="logo">
-            <img src="img/Ctemplogo.png" alt="COLLEGE CBT PORTAL">
+            <img src="img/wisdom_logo1.png" alt="image">
 
+           
         </div>
 
            
@@ -533,7 +608,7 @@
      
 
     
-        <center><h3>CANAANLAND  GROUP OF SCHOOLS EKUTE QUARTERS  ADO EKITI </h3></center> 
+        <center><h3>WISDOM FOUNDATION SCHOOLS EGBEWA  ADO EKITI </h3></center> 
         <center><h3>SECOND TERM EXAMINATION 2025/2026 ACADEMIC SESSION</h3></center>
        
         <!-- SECTION TOGGLE BUTTONS -->
@@ -543,7 +618,7 @@
         </div>
        
         <div class="exam-info">
-            Exam: <span id="examInfo" style="color: lime;">  MATHEMATICS - JSS1 (SECOND TERM)</span>
+            Exam: <span id="examInfo" style="color: lime;">  JSS1 MATHEMATICS (SECOND TERM)</span>
         </div>
        
         <div id="timer"></div>
@@ -609,668 +684,309 @@
         <p id="unansweredLabel">Unanswered: 5/5</p>
     </div>
              <div class="marquee-container">
-        <span class="marquee-text">2ND TERM EXAMINATIONS 2025/2026 ACADEMIC SESSION</span>
+        <span class="marquee-text"> JSS1 MATHEMATICS   FOR 2ND TERM EXAMINATIONS 2025/2026 ACADEMIC SESSION HAPPY EASTER HOLIDAY CELEBRATION </span>
     </div>
    
     <div class="windows-activate">
-        <p> &copy; cbt.<span style="color: red;">canaanlandmodelgroupof</span><span style="color: green;">schools</span>.org</p>
+        <p> &copy; cbt.<span style="color: red;">wisdom foundation</span><span style="color: green;">schools</span>.org</p>
     </div>
 
 
     <script>
-           // Get stored username and image from sessionStorage
-       
+        
+      const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxrvvN8qlD6-v8io34IKNB_SOqk154WNjwKtZ37VYtqmhdyXWaIbz53dDcKKPX9oolBHw/exec'; 
             
     
         // ================== STATIC QUESTIONS DATA ==================
    const staticObjectivesQuestions = [
-     {
+          {
           "id": 1,
-          "question": "What is the sum of ¾ and ⅔?",
+          "question": "(+16) + (+2) =",
           "options": {
-            "A": "1 5/12",
-            "B": "1 ¼",
-            "C": "1 ⅓",
-            "D": "1 ½"
+            "A": "12",
+            "B": "18",
+            "C": "-18",
+            "D": "-12"
           },
-          "answer": "A",
+          "answer": "B",
           "image": null
         },
         {
           "id": 2,
-          "question": "Subtract 5/8 from 1 ½.",
+          "question": "(-19) – (-14) =",
           "options": {
-            "A": "1 ⅛",
-            "B": "1 ⅜",
-            "C": "⅞",
-            "D": "1"
+            "A": "5",
+            "B": "-33",
+            "C": "-5",
+            "D": "33"
           },
           "answer": "C",
           "image": null
         },
         {
           "id": 3,
-          "question": "The product of 2/5 and 3/4 is ______.",
+          "question": "(+12) + (-40) =",
           "options": {
-            "A": "3/10",
-            "B": "5/9",
-            "C": "6/20",
-            "D": "8/15"
+            "A": "52",
+            "B": "-28",
+            "C": "28",
+            "D": "-52"
           },
-          "answer": "A",
+          "answer": "B",
           "image": null
         },
         {
           "id": 4,
-          "question": "Divide ¾ by ½.",
+          "question": "Convert 5000grams to kilograms",
           "options": {
-            "A": "1 ½",
-            "B": "1 ¼",
-            "C": "2",
-            "D": "3/8"
+            "A": "5kg",
+            "B": "50kg",
+            "C": "500kg",
+            "D": "0.5kg"
           },
           "answer": "A",
           "image": null
         },
         {
           "id": 5,
-          "question": "Round 567.389 to the nearest whole number.",
+          "question": "What is the unit of measurement of a keg of kerosene",
           "options": {
-            "A": "567",
-            "B": "568",
-            "C": "567.4",
-            "D": "567.39"
-          },
-          "answer": "A",
-          "image": null
-        },
-        {
-          "id": 6,
-          "question": "How many significant figures are in 0.0405?",
-          "options": {
-            "A": "2",
-            "B": "3",
-            "C": "4",
-            "D": "5"
-          },
-          "answer": "B",
-          "image": null
-        },
-        {
-          "id": 7,
-          "question": "The binary number 1011₂ is equal to ______ in base ten.",
-          "options": {
-            "A": "9",
-            "B": "10",
-            "C": "11",
-            "D": "12"
+            "A": "milliliters",
+            "B": "centiliters",
+            "C": "liter",
+            "D": "deciliter"
           },
           "answer": "C",
           "image": null
         },
         {
-          "id": 8,
-          "question": "Add 101₂ and 110₂.",
+          "id": 6,
+          "question": "What unit of measurement car be used for a car",
           "options": {
-            "A": "1001₂",
-            "B": "1011₂",
-            "C": "1101₂",
-            "D": "1111₂"
+            "A": "tonne",
+            "B": "kilogram",
+            "C": "gram",
+            "D": "none of the above"
           },
-          "answer": "B",
+          "answer": "A",
+          "image": null
+        },
+        {
+          "id": 7,
+          "question": "How many kilogram make up 1 tonne",
+          "options": {
+            "A": "1",
+            "B": "10",
+            "C": "100",
+            "D": "1000"
+          },
+          "answer": "D",
+          "image": null
+        },
+        {
+          "id": 8,
+          "question": "How many 50 grammes mass can be obtained from 250 grammes",
+          "options": {
+            "A": "3",
+            "B": "4",
+            "C": "5",
+            "D": "6"
+          },
+          "answer": "C",
           "image": null
         },
         {
           "id": 9,
-          "question": "Subtract 101₂ from 1110₂.",
+          "question": "Solve 5% of #125",
           "options": {
-            "A": "1001₂",
-            "B": "1101₂",
-            "C": "1011₂",
-            "D": "111₂"
+            "A": "#6.25",
+            "B": "#7.4",
+            "C": "#8.3",
+            "D": "9.8"
           },
           "answer": "A",
           "image": null
         },
         {
           "id": 10,
-          "question": "Multiply 101₂ by 11₂.",
+          "question": "Express 1/4 in percentage",
           "options": {
-            "A": "1111₂",
-            "B": "1101₂",
-            "C": "1010₂",
-            "D": "1001₂"
-          },
-          "answer": "A",
-          "image": null
-        },
-        {
-          "id": 11,
-          "question": "In the expression 5x + 3y, the coefficient of y is ______.",
-          "options": {
-            "A": "5",
-            "B": "3",
-            "C": "x",
-            "D": "y"
+            "A": "30%",
+            "B": "25%",
+            "C": "40%",
+            "D": "50%"
           },
           "answer": "B",
           "image": null
         },
         {
-          "id": 12,
-          "question": "Simplify: 2a + 3b + a – b.",
+          "id": 11,
+          "question": "Express 20% as fraction",
           "options": {
-            "A": "3a + 2b",
-            "B": "3a + 4b",
-            "C": "a + 2b",
-            "D": "5ab"
+            "A": "1/2",
+            "B": "1/4",
+            "C": "1/5",
+            "D": "1/10"
+          },
+          "answer": "C",
+          "image": null
+        },
+        {
+          "id": 12,
+          "question": "Simplify 1010₂ + 1101₂",
+          "options": {
+            "A": "10111₂",
+            "B": "1011₂",
+            "C": "1111₂",
+            "D": "01011₂"
           },
           "answer": "A",
           "image": null
         },
         {
           "id": 13,
-          "question": "Expand: 3(x + 4).",
+          "question": "Simplify 102₃ + 212₃",
           "options": {
-            "A": "3x + 4",
-            "B": "3x + 12",
-            "C": "x + 12",
-            "D": "7x"
+            "A": "1021₃",
+            "B": "1102₃",
+            "C": "0112₃",
+            "D": "2110₃"
           },
-          "answer": "B",
+          "answer": "A",
           "image": null
         },
         {
           "id": 14,
-          "question": "Collect like terms: 5p – 2q + p + 4q.",
+          "question": "Simplify 10011₂ – 1101₂",
           "options": {
-            "A": "6p + 2q",
-            "B": "6p – 2q",
-            "C": "4p + 2q",
-            "D": "5p + 6q"
+            "A": "00110₂",
+            "B": "00101₂",
+            "C": "01010₂",
+            "D": "11000₂"
           },
           "answer": "A",
           "image": null
         },
         {
           "id": 15,
-          "question": "Solve: x + 7 = 15.",
+          "question": "312₄ – 233₄",
           "options": {
-            "A": "8",
-            "B": "22",
-            "C": "9",
-            "D": "10"
+            "A": "013₄",
+            "B": "130₄",
+            "C": "103₄",
+            "D": "1003₄"
           },
           "answer": "A",
           "image": null
         },
         {
           "id": 16,
-          "question": "If 3y = 27, then y = ______.",
+          "question": "Approximate 49.567 to 2 decimal place",
           "options": {
-            "A": "9",
-            "B": "24",
-            "C": "30",
-            "D": "81"
+            "A": "49.50",
+            "B": "49.57",
+            "C": "49",
+            "D": "49.56"
           },
-          "answer": "A",
+          "answer": "B",
           "image": null
         },
         {
           "id": 17,
-          "question": "An angle less than 90° is called ______.",
+          "question": "Approximate 0.0457 to 2 decimal place",
           "options": {
-            "A": "obtuse",
-            "B": "reflex",
-            "C": "acute",
-            "D": "right"
+            "A": "0.04",
+            "B": "0.05",
+            "C": "0.10",
+            "D": "0.11"
           },
-          "answer": "C",
+          "answer": "B",
           "image": null
         },
         {
           "id": 18,
-          "question": "The sum of angles on a straight line is ______.",
+          "question": "Approximate 813.1146 to 2 significant figures",
           "options": {
-            "A": "90°",
-            "B": "180°",
-            "C": "360°",
-            "D": "270°"
+            "A": "813.12",
+            "B": "810",
+            "C": "820",
+            "D": "813.11"
           },
           "answer": "B",
           "image": null
         },
         {
           "id": 19,
-          "question": "Calculate the perimeter of a rectangle of length 8 cm and width 5 cm.",
+          "question": "Approximate 237.46 to 2 significant figures",
           "options": {
-            "A": "13 cm",
-            "B": "26 cm",
-            "C": "40 cm",
-            "D": "30 cm"
+            "A": "230",
+            "B": "240",
+            "C": "237.40",
+            "D": "237.50"
           },
           "answer": "B",
           "image": null
         },
         {
           "id": 20,
-          "question": "The area of a square of side 6 m is ______.",
+          "question": "Approximate 7.213659 to 2 significant figures",
           "options": {
-            "A": "12 m²",
-            "B": "24 m²",
-            "C": "36 m²",
-            "D": "30 m²"
-          },
-          "answer": "C",
-          "image": null
-        },
-        {
-          "id": 21,
-          "question": "The mean of 4, 6, 8, and 10 is ______.",
-          "options": {
-            "A": "7",
-            "B": "8",
-            "C": "9",
-            "D": "10"
+            "A": "7.20000",
+            "B": "7.21000",
+            "C": "7.3000",
+            "D": "7.2200"
           },
           "answer": "A",
-          "image": null
-        },
-        {
-          "id": 22,
-          "question": "The mode of 2, 3, 4, 3, 5, 3 is ______.",
-          "options": {
-            "A": "2",
-            "B": "3",
-            "C": "4",
-            "D": "5"
-          },
-          "answer": "B",
-          "image": null
-        },
-        {
-          "id": 23,
-          "question": "Which is the smallest fraction?",
-          "options": {
-            "A": "2/3",
-            "B": "3/5",
-            "C": "5/8",
-            "D": "1/2"
-          },
-          "answer": "D",
-          "image": null
-        },
-        {
-          "id": 24,
-          "question": "0.25 as a fraction in its lowest terms is ______.",
-          "options": {
-            "A": "1/4",
-            "B": "25/100",
-            "C": "1/25",
-            "D": "5/20"
-          },
-          "answer": "A",
-          "image": null
-        },
-        {
-          "id": 25,
-          "question": "The place value of 7 in 3.076 is ______.",
-          "options": {
-            "A": "tenths",
-            "B": "hundredths",
-            "C": "thousandths",
-            "D": "tens"
-          },
-          "answer": "B",
-          "image": null
-        },
-        {
-          "id": 26,
-          "question": "3/8 × 4/9 = ______.",
-          "options": {
-            "A": "1/6",
-            "B": "12/72",
-            "C": "7/17",
-            "D": "1/3"
-          },
-          "answer": "A",
-          "image": null
-        },
-        {
-          "id": 27,
-          "question": "Express 0.375 as a fraction.",
-          "options": {
-            "A": "3/8",
-            "B": "375/1000",
-            "C": "3/4",
-            "D": "5/8"
-          },
-          "answer": "A",
-          "image": null
-        },
-        {
-          "id": 28,
-          "question": "Which of these is an algebraic expression?",
-          "options": {
-            "A": "5 + 3 = 8",
-            "B": "2x – 7",
-            "C": "9 > 5",
-            "D": "πr²"
-          },
-          "answer": "B",
-          "image": null
-        },
-        {
-          "id": 29,
-          "question": "Simplify: 4a × 3b.",
-          "options": {
-            "A": "7ab",
-            "B": "12ab",
-            "C": "12a",
-            "D": "12b"
-          },
-          "answer": "B",
-          "image": null
-        },
-        {
-          "id": 30,
-          "question": "If a = 3 and b = 2, find a² + b².",
-          "options": {
-            "A": "5",
-            "B": "13",
-            "C": "10",
-            "D": "25"
-          },
-          "answer": "B",
-          "image": null
-        },
-        {
-          "id": 31,
-          "question": "Convert 25₁₀ to base two.",
-          "options": {
-            "A": "11001₂",
-            "B": "11101₂",
-            "C": "10101₂",
-            "D": "10011₂"
-          },
-          "answer": "A",
-          "image": null
-        },
-        {
-          "id": 32,
-          "question": "The complement of 35° is ______.",
-          "options": {
-            "A": "145°",
-            "B": "55°",
-            "C": "65°",
-            "D": "45°"
-          },
-          "answer": "B",
-          "image": null
-        },
-        {
-          "id": 33,
-          "question": "How many degrees are in a right angle?",
-          "options": {
-            "A": "45°",
-            "B": "90°",
-            "C": "180°",
-            "D": "360°"
-          },
-          "answer": "B",
-          "image": null
-        },
-        {
-          "id": 34,
-          "question": "A triangle with all sides equal is called ______.",
-          "options": {
-            "A": "isosceles",
-            "B": "scalene",
-            "C": "equilateral",
-            "D": "right-angled"
-          },
-          "answer": "C",
-          "image": null
-        },
-        {
-          "id": 35,
-          "question": "Find the area of a triangle with base 10 cm and height 4 cm.",
-          "options": {
-            "A": "20 cm²",
-            "B": "40 cm²",
-            "C": "14 cm²",
-            "D": "25 cm²"
-          },
-          "answer": "A",
-          "image": null
-        },
-        {
-          "id": 36,
-          "question": "The perimeter of a square of side 9 cm is ______.",
-          "options": {
-            "A": "18 cm",
-            "B": "27 cm",
-            "C": "36 cm",
-            "D": "81 cm"
-          },
-          "answer": "C",
-          "image": null
-        },
-        {
-          "id": 37,
-          "question": "The median of 5, 8, 3, 9, 2 is ______.",
-          "options": {
-            "A": "5",
-            "B": "8",
-            "C": "3",
-            "D": "9"
-          },
-          "answer": "A",
-          "image": null
-        },
-        {
-          "id": 38,
-          "question": "A pie chart represents data in ______.",
-          "options": {
-            "A": "bars",
-            "B": "sectors",
-            "C": "lines",
-            "D": "columns"
-          },
-          "answer": "B",
-          "image": null
-        },
-        {
-          "id": 39,
-          "question": "Which is the largest 3-digit number?",
-          "options": {
-            "A": "999",
-            "B": "100",
-            "C": "990",
-            "D": "109"
-          },
-          "answer": "A",
-          "image": null
-        },
-        {
-          "id": 40,
-          "question": "Estimate 148 + 63 by rounding to the nearest ten.",
-          "options": {
-            "A": "200",
-            "B": "210",
-            "C": "220",
-            "D": "230"
-          },
-          "answer": "B",
-          "image": null
-        },
-        {
-          "id": 41,
-          "question": "7.2 ÷ 0.6 = ______.",
-          "options": {
-            "A": "1.2",
-            "B": "12",
-            "C": "0.12",
-            "D": "120"
-          },
-          "answer": "B",
-          "image": null
-        },
-        {
-          "id": 42,
-          "question": "The next number in the sequence 3, 6, 9, 12, … is ______.",
-          "options": {
-            "A": "15",
-            "B": "18",
-            "C": "21",
-            "D": "24"
-          },
-          "answer": "A",
-          "image": null
-        },
-        {
-          "id": 43,
-          "question": "5² – 3² = ______.",
-          "options": {
-            "A": "4",
-            "B": "16",
-            "C": "34",
-            "D": "8"
-          },
-          "answer": "B",
-          "image": null
-        },
-        {
-          "id": 44,
-          "question": "Find the value of 2x + 5 when x = 4.",
-          "options": {
-            "A": "9",
-            "B": "13",
-            "C": "18",
-            "D": "40"
-          },
-          "answer": "B",
-          "image": null
-        },
-        {
-          "id": 45,
-          "question": "A prime number between 10 and 20 is ______.",
-          "options": {
-            "A": "14",
-            "B": "15",
-            "C": "17",
-            "D": "21"
-          },
-          "answer": "C",
-          "image": null
-        },
-        {
-          "id": 46,
-          "question": "The HCF of 12 and 18 is ______.",
-          "options": {
-            "A": "3",
-            "B": "6",
-            "C": "9",
-            "D": "12"
-          },
-          "answer": "B",
-          "image": null
-        },
-        {
-          "id": 47,
-          "question": "The LCM of 4 and 5 is ______.",
-          "options": {
-            "A": "10",
-            "B": "20",
-            "C": "30",
-            "D": "40"
-          },
-          "answer": "B",
-          "image": null
-        },
-        {
-          "id": 48,
-          "question": "If ¼ of a number is 7, the number is ______.",
-          "options": {
-            "A": "21",
-            "B": "24",
-            "C": "28",
-            "D": "35"
-          },
-          "answer": "C",
-          "image": null
-        },
-        {
-          "id": 49,
-          "question": "30% of ₦500 is ______.",
-          "options": {
-            "A": "₦100",
-            "B": "₦150",
-            "C": "₦200",
-            "D": "₦250"
-          },
-          "answer": "B",
-          "image": null
-        },
-        {
-          "id": 50,
-          "question": "Which is a measure of central tendency?",
-          "options": {
-            "A": "Range",
-            "B": "Median",
-            "C": "Sum",
-            "D": "Product"
-          },
-          "answer": "B",
           "image": null
         }
 ];
 
 
         const staticTheoryQuestions = [
-                                     {
-                                    id: 1,
-                                    question: "Simplify \na. (i) 2⅔ + 1¾\n(ii) 3½ ÷ 1¼ \n b. A farmer has 5½ hectares of land. He plants maize on ⅔ of it. How many hectares are left for other crops? \n c. Round 6.4783 to\n (i) 2 decimal places\n(ii) 3 significant figures",
-                                    marks: 10,
-                                    image: null
-                                  },
-                                  {
-                                    id: 2,
-                                    question: "Convert \n a. (i) 29₁₀ to base two\n(ii) 11011₂ to base ten \n b.Perform The Followiong Binary Operation\n (i) 111₂ + 101₂\n(ii) 1001₂ – 110₂ \n c. Multiply 1011₂ by 101₂.",
-                                    marks: 10,
-                                    image: null
-                                  },
-                                  {
-                                    id: 3,
-                                    question: "Simplify\n a. (i) 4x + 3y – 2x + 5y\n(ii) 2(3a – 4b) + 5(a + b) \n b. If p = 5 and q = 2, evaluate:\n (i) 3p² – 2q\n(ii) (p + q)(p – q) \n c.solve\n (i) 2x – 7 = 15\n(ii) ¾ y = 12",
-                                    marks: 10,
-                                    image: null
-                                  },
-                                  {
-                                    id: 4,
-                                    question: "a. In a class of 48 students, ¼ are boys. How many are girls? \n b. Mr. Ojo bought 8.5 kg of rice at ₦320 per kg. How much change did he get from ₦3,000? \n c. Find the mean and median of: 12, 8, 15, 10, 13, 11, 14.",
-                                    marks: 10,
-                                    image: null
-                                  },
-                                  {
-                                    id: 5,
-                                    question: "a. Calculate the perimeter of a rectangular garden of length 15 m and width 9 m. \n b. Find the area of a triangle with base 14 cm and height 6 cm. \n c. An angle is 25° more than its complement. Find the angle.",
-                                    marks: 10,
-                                    image: null
-                                  },
-                                  {
-                                    id: 6,
-                                    question: "a. Estimate the product of 47 and 32 by rounding each to the nearest ten. \n b. A bag contains 12 red balls, 8 blue balls, and 5 green balls. What fraction of the balls are blue? \n c. Simplify: ⅗ of (2½ + 1¼)",
-                                    marks: 10,
-                                    image: null
-                                  },
-                                  {
-                                    id: 7,
-                                    question: "a. If 5 books cost ₦2,500, how much will 9 of the same books cost? \n b. The sum of three consecutive numbers is 63. Find the numbers. \n c. Find the value of: 0.2 × 0.3 ÷ 0.02",
-                                    marks: 10,
-                                    image: null
-                                  }
+    {
+          "id": 1,
+          "question": "State the unit of mass that you will use to measure the following: (i) a car (ii) a chair (iii) a lorry (iv) a bag of rice (v) a bag of beans (vi) an orange (vii) a boy/girl",
+          "marks": 10,
+          "image": null
+        },
+        {
+          "id": 2,
+          "question": "How many 50 grammes mass can be obtained from 400 grammes",
+          "marks": 10,
+          "image": null
+        },
+        {
+          "id": 3,
+          "question": "Copy and complete the table in base 5\n+   0   1   2   3   4\n0   0\n1\n2                 11\n3\n4   4           13",
+          "marks": 10,
+          "image": "img1/math_jss1_que3.png"
+        },
+        {
+          "id": 4,
+          "question": "If t=10 and e=11 in base twelve, simplify the following in base 12\n(i) 4e4e + 2e12\n(ii) e8et – 1ee2",
+          "marks": 10,
+          "image": null
+        },
+        {
+          "id": 5,
+          "question": "Express the following in common fraction (i) 26% (ii) 35% (iii) 200%",
+          "marks": 10,
+          "image": null
+        },
+        {
+          "id": 6,
+          "question": "Express the following as a percentage (i) 42/100 (ii) 17/100 (iii) 51/100",
+          "marks": 10,
+          "image": null
+        }
 ];
+
+
+
+
+
+
+
         // ================== APPLICATION VARIABLES ==================
         let questions = [];
         let currentQuestion = 0;
@@ -1279,6 +995,7 @@
         let currentTheory = 0;
         let theoryAnswers = [];
         let currentSection = 'objectives';
+        //const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxrvvN8qlD6-v8io34IKNB_SOqk154WNjwKtZ37VYtqmhdyXWaIbz53dDcKKPX9oolBHw/exec';
        
         // ================== INITIALIZATION ==================
         window.onload = function () {
@@ -1292,30 +1009,7 @@
                 localStorage.setItem('examClass', 'RESULT');
             }
             localStorage.setItem('examTerm', 'SECOND TERM 2025/2026');
-             /*let username = sessionStorage.getItem('username');
-             const userImage = sessionStorage.getItem('image');
-            document.getElementById("usernameDisplay").innerText = "WELCOME:" + " " + username;
-            document.getElementById('userImage').src = "img/student.png";
-            document.getElementById('userName').innerText = username;
-            document.getElementById('userImage').src = userImage;
-
-
-            const username = sessionStorage.getItem('username') || 'Student';
-            const userImageFile = sessionStorage.getItem('image');
-            const userImagePath = userImageFile ? `img/${userImageFile}` : 'img/default_user.jpg';
-
-            // Set username
-            const usernameElements = [document.getElementById('userName'), document.getElementById('usernameDisplay')];
-            usernameElements.forEach(el => { if(el) el.innerText = username; });
-
-            // Set user image
-            const userImageElement = document.getElementById('userImage');
-            if(userImageElement){
-                userImageElement.src = userImagePath;
-                userImageElement.onerror = function(){
-                    this.src = 'img/default_user.jpg'; // fallback if image not found
-                };
-            }*/
+      
              const username = sessionStorage.getItem('username');
                 const image = sessionStorage.getItem('image');
 
@@ -1325,11 +1019,10 @@
                   document.getElementById('username').innerText = username;
                   
               
-                //document.getElementById('userImage').src =
-              //'img/' + (sessionStorage.getItem('image') || 'default_user.jpg');
-
-              document.getElementById('userImage').src = sessionStorage.getItem('image') || 'img/default_user.jpg';
+                /*document.getElementById('userImage').src =
+              'img/' + (sessionStorage.getItem('image') || 'default_user.jpg');*/
                 }
+            document.getElementById('userImage').src = sessionStorage.getItem('image') || 'img/default_user.jpg';
            
             // Load static questions
             questions = staticObjectivesQuestions;
@@ -1347,27 +1040,39 @@
             updateTheoryStatus();
         };
        
-        // ================== TIMER ==================
-        let timeLeft = 60 * 90; // 60 minutes
-        const timerEl = document.getElementById('timer');
-        const timerInterval = setInterval(() => {
-            let min = Math.floor(timeLeft / 60);
-            let sec = timeLeft % 60;
-            timerEl.textContent = `Time Remaining: ${min}:${sec < 10 ? '0' + sec : sec}`;
-            timeLeft--;
-           
-            // Change color when time is running out
-            if (timeLeft < 300) { // 5 minutes
-                timerEl.style.color = 'red';
-                timerEl.style.animation = 'pulse 1s infinite';
-            }
-           
-            if (timeLeft < 0) {
-                clearInterval(timerInterval);
-                alert("Time is up! Your exam will be submitted automatically.");
-                submitExam();
-            }
-        }, 1000);
+                    // ================== TIMER ==================
+                let timeLeft = 60 * 90; // 90 minutes in seconds
+                const timerEl = document.getElementById('timer');
+                const timerInterval = setInterval(() => {
+                    const hours = Math.floor(timeLeft / 3600);
+                    const minutes = Math.floor((timeLeft % 3600) / 60);
+                    const seconds = timeLeft % 60;
+                    
+                    // Build display string
+                    let display = '';
+                    if (hours > 0) {
+                        display += `${hours} Hr:`;
+                    }
+                    if (minutes > 0 || hours > 0) { // show minutes if any hour or minute >0
+                        display += `${minutes} Min: `;
+                    }
+                    display += `${seconds} Sec`;
+                    
+                    timerEl.textContent = `Time Remaining: ${display}`;
+                    timeLeft--;
+                   
+                    // Change color when time is running out (less than 5 minutes)
+                    if (timeLeft < 300) { // 5 minutes = 300 seconds
+                        timerEl.style.color = 'red';
+                        timerEl.style.animation = 'pulse 1s infinite';
+                    }
+                   
+                    if (timeLeft < 0) {
+                        clearInterval(timerInterval);
+                        alert("Time is up! Your exam will be submitted automatically.");
+                        submitExam();
+                    }
+                }, 1000);
        
         // ================== SECTION TOGGLE ==================
         function showSection(section) {
@@ -1532,233 +1237,83 @@
             document.getElementById("unansweredLabel").innerText = `Unanswered: ${unansweredCount}`;
         }
        
-        /*function submitExam() {
-            saveAnswer();
-            let score = 0;
-            questions.forEach((q, i) => {
-                if (userAnswers[i] === q.answer) score++;
-            });
-           
-            clearInterval(timerInterval);
-            alert(`Objective Exam Completed!\nYour Score: ${score} out of ${questions.length}`);
-        }*/
+
+   
          function submitExam() {
             saveAnswer();
             showResult();
         }
        
-        /*function showResult() {
-            clearInterval(timerInterval);
-            let score = 0;
-            questions.forEach((q, i) => {
-                if (userAnswers[i] === q.answer) score++;
-            });
-           
-            const username = localStorage.getItem("username") || "Guest";
-            localStorage.setItem("examUser", username);
-            localStorage.setItem("examScore", score);
-            localStorage.setItem("totalQuestions", questions.length);
 
+            // ========== SHOW RESULT (with result submission) ==========
+            function showResult() {
+                clearInterval(timerInterval);
+                let score = 0;
+                questions.forEach((q, i) => {
+                    if (userAnswers[i] === q.answer) score++;
+                });
 
-            // Save exam data before going to result page
-            localStorage.setItem("student_name", username);
-            localStorage.setItem("student_class", selectedClass);
-            localStorage.setItem("exam_subject", selectedSubject);
-            localStorage.setItem("student_image", studentImageURL);
-            localStorage.setItem("exam_score", score);
-            localStorage.setItem("total_questions", totalQuestions);
+                const username = sessionStorage.getItem('username') || "Guest";
+                const cls = sessionStorage.getItem('class');
+                const sub = sessionStorage.getItem('subject');
+                const total = questions.length;
+                const percentage = ((score / total) * 100).toFixed(2);
+                const examInfo = sessionStorage.getItem('examInfo') || 'TEST - RESULT (SECOND TERM)';
 
-                // Redirect to results page
+                localStorage.setItem("examUser", username);
+                localStorage.setItem("examScore", score);
+                localStorage.setItem("totalQuestions", total);
+                localStorage.setItem("pendingClass", cls);
+                localStorage.setItem("pendingSubject", sub);
+                localStorage.setItem("pendingUsername", username);
+                localStorage.setItem("examInfo", examInfo);
+
+                // Send result to Google Sheets
+                const record = {
+                    action: 'result',
+                    username: username,
+                    class: cls,
+                    subject: sub,
+                    score: score,
+                    total: total,
+                    percentage: percentage,
+                    timeSpent: 3600 - timeLeft,
+                    examInfo: examInfo,
+                    timestamp: new Date().toISOString()
+                };
+
+                fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(record)
+                }).catch(err => console.error('Failed to send result:', err));
+
+                // Local backup
+                let records = JSON.parse(localStorage.getItem('examRecords') || '[]');
+                records.push(record);
+                localStorage.setItem('examRecords', JSON.stringify(records));
+
+                // Download JSON
+                const scoreDetails = {
+                    ...record,
+                    userAnswers: userAnswers,
+                    correctAnswers: questions.map(q => q.answer)
+                };
+                const blob = new Blob([JSON.stringify(scoreDetails, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `exam_results_${username}_${new Date().getTime()}.json`;
+                a.style.display = 'none';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+
+                console.log(`Exam completed. Result sent to sheet.`);
+                alert(`Objective Exam Completed!\nYour Score: ${score} out of ${total}\n\nClick OK to view your results.`);
                 window.location.href = "results.html";
-           
-            alert(`Objective Exam Completed!\nYour Score: ${score} out of ${questions.length}`);
-            window.location.href = "results.html";
-        }*/
-        /*function showResult() {
-            clearInterval(timerInterval);
-            let score = 0;
-            questions.forEach((q, i) => {
-                if (userAnswers[i] === q.answer) score++;
-            });
-           
-            const username = localStorage.getItem("username") || "Guest";
-            const cls = sessionStorage.getItem("class");
-            const sub = sessionStorage.getItem("subject");
-           
-            localStorage.setItem("examUser", username);
-            localStorage.setItem("examScore", score);
-            localStorage.setItem("totalQuestions", questions.length);
-            localStorage.setItem("examInfo", document.getElementById('examInfo').textContent.trim());
-           
-            // ✅ Mark exam as completed
-            if (cls && sub) {
-                const attempts = getExamAttempts(cls);
-                if (!attempts[username]) {
-                    attempts[username] = {};
-                }
-                attempts[username][sub] = true;
-                saveExamAttempts(cls, attempts);
             }
-           
-            alert(`Objective Exam Completed!\nYour Score: ${score} out of ${questions.length}`);
-            window.location.href = "results.html";
-    }*/
-       /*function showResult() {
-                    clearInterval(timerInterval);
-                    let score = 0;
-                    questions.forEach((q, i) => {
-                        if (userAnswers[i] === q.answer) score++;
-                    });
-                   
-                    const username = sessionStorage.getItem('username') || "Guest";
-                    const cls = sessionStorage.getItem('class');
-                    const sub = sessionStorage.getItem('subject');
-                   
-                    localStorage.setItem("examUser", username);
-                    localStorage.setItem("examScore", score);
-                    localStorage.setItem("totalQuestions", questions.length);
-                    localStorage.setItem("pendingClass", cls);
-                    localStorage.setItem("pendingSubject", sub);
-                    localStorage.setItem("pendingUsername", username);
-                   
-                    // ✅ Get exam info from sessionStorage or use default
-                    const examInfo = sessionStorage.getItem('examInfo') || 'EXAMINATION - RERSULT (2ND TERM)';
-                    localStorage.setItem("examInfo", examInfo);
-                   
-                    // ✅ DO NOT mark exam as completed here - wait for confirmation on results page
-                    console.log(`Exam completed but not marked as attempted yet. Waiting for confirmation.`);
-                   
-                    alert(`Objective Exam Completed!\nYour Score: ${score} out of ${questions.length}\n\nClick OK to view your results and confirm your attempt.`);
-                    window.location.href = "results.html";
-        }*/
-
-            /*function showResult() {
-				    clearInterval(timerInterval);
-				    let score = 0;
-				    questions.forEach((q, i) => {
-				        if (userAnswers[i] === q.answer) score++;
-				    });
-				    
-				    const username = sessionStorage.getItem('username') || "Guest";
-				    const cls = sessionStorage.getItem('class');
-				    const sub = sessionStorage.getItem('subject');
-				    
-				    localStorage.setItem("examUser", username);
-				    localStorage.setItem("examScore", score);
-				    localStorage.setItem("totalQuestions", questions.length);
-				    localStorage.setItem("pendingClass", cls);
-				    localStorage.setItem("pendingSubject", sub);
-				    localStorage.setItem("pendingUsername", username);
-				    
-				    // ✅ Get exam info from sessionStorage or use default
-				    const examInfo = sessionStorage.getItem('examInfo') || 'TEST - RESULT (SECOND TERM)';
-				    localStorage.setItem("examInfo", examInfo);
-				    
-				    // ✅ Secretly download score details to downloads folder
-				    const scoreDetails = {
-				        username: username,
-				        class: cls,
-				        subject: sub,
-				        score: score,
-				        totalQuestions: questions.length,
-				        percentage: ((score / questions.length) * 100).toFixed(2) + '%',
-				        examInfo: examInfo,
-				        timestamp: new Date().toISOString(),
-				        userAnswers: userAnswers,
-				        correctAnswers: questions.map(q => q.answer)
-				    };
-				    
-				    // Create a blob with the data
-				    const blob = new Blob([JSON.stringify(scoreDetails, null, 2)], { type: 'application/json' });
-				    const url = URL.createObjectURL(blob);
-				    
-				    // Create a hidden anchor element and trigger download
-				    const a = document.createElement('a');
-				    a.href = url;
-				    a.download = `exam_results_${username}_${new Date().getTime()}.json`;
-				    a.style.display = 'none';
-				    document.body.appendChild(a);
-				    a.click();
-				    
-				    // Clean up
-				    document.body.removeChild(a);
-				    URL.revokeObjectURL(url);
-				    
-				    // ✅ DO NOT mark exam as completed here - wait for confirmation on results page
-				    console.log(`Exam completed but not marked as attempted yet. Waiting for confirmation.`);
-				    
-				    alert(`Objective Exam Completed!\nYour Score: ${score} out of ${questions.length}\n\nClick OK to view your results and confirm your attempt.`);
-				    window.location.href = "results.html";
-				}*/
-                function showResult() {
-                        clearInterval(timerInterval);
-                        let score = 0;
-                        questions.forEach((q, i) => {
-                            if (userAnswers[i] === q.answer) score++;
-                        });
-                        
-                        const username = sessionStorage.getItem('username') || "Guest";
-                        const cls = sessionStorage.getItem('class');
-                        const sub = sessionStorage.getItem('subject');
-                        
-                        localStorage.setItem("examUser", username);
-                        localStorage.setItem("examScore", score);
-                        localStorage.setItem("totalQuestions", questions.length);
-                        localStorage.setItem("pendingClass", cls);
-                        localStorage.setItem("pendingSubject", sub);
-                        localStorage.setItem("pendingUsername", username);
-                        
-                        // Get exam info from sessionStorage or use default
-                        const examInfo = sessionStorage.getItem('examInfo') || 'TEST - RESULT (SECOND TERM)';
-                        localStorage.setItem("examInfo", examInfo);
-                        
-                        // ✅ Build a clean record for history (to be used by records.html)
-                        const record = {
-                            username: username,
-                            class: cls,
-                            subject: sub,
-                            score: score,
-                            totalQuestions: questions.length,
-                            percentage: ((score / questions.length) * 100).toFixed(2) + '%',
-                            examInfo: examInfo,
-                            timestamp: new Date().toISOString()
-                        };
-                        
-                        // ✅ Save this attempt to localStorage (creates/updates examRecords array)
-                        let records = JSON.parse(localStorage.getItem('examRecords') || '[]');
-                        records.push(record);
-                        localStorage.setItem('examRecords', JSON.stringify(records));
-                        
-                        // ✅ Secretly download score details to downloads folder
-                        const scoreDetails = {
-                            ...record,
-                            userAnswers: userAnswers,
-                            correctAnswers: questions.map(q => q.answer)
-                        };
-                        
-                        // Create a blob with the data
-                        const blob = new Blob([JSON.stringify(scoreDetails, null, 2)], { type: 'application/json' });
-                        const url = URL.createObjectURL(blob);
-                        
-                        // Create a hidden anchor element and trigger download
-                        const a = document.createElement('a');
-                        a.href = url;
-                        a.download = `exam_results_${username}_${new Date().getTime()}.json`;
-                        a.style.display = 'none';
-                        document.body.appendChild(a);
-                        a.click();
-                        
-                        // Clean up
-                        document.body.removeChild(a);
-                        URL.revokeObjectURL(url);
-                        
-                        // ✅ DO NOT mark exam as completed here - wait for confirmation on results page
-                        console.log(`Exam completed but not marked as attempted yet. Waiting for confirmation.`);
-                        
-                        alert(`Objective Exam Completed!\nYour Score: ${score} out of ${questions.length}\n\nClick OK to view your results and confirm your attempt.`);
-                        window.location.href = "results.html";
-                    }
-
 
 
 
