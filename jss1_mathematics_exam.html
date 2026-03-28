@@ -3,310 +3,547 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JSS1 Mathematics Exam (Debug)</title>
+  <title>JSS1 Mathematics Exam</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       max-width: 900px;
-      margin: 20px auto;
+      margin: 0 auto;
       padding: 20px;
       background: #f5f5f5;
     }
+    * { user-select: none; }
+    #header {
+      background: #2c3e50;
+      color: white;
+      padding: 15px;
+      border-radius: 12px 12px 0 0;
+      text-align: center;
+    }
+    .marquee-container {
+      background: #e67e22;
+      padding: 8px;
+      margin: 10px 0;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .marquee-text {
+      display: inline-block;
+      white-space: nowrap;
+      animation: marquee 15s linear infinite;
+      font-weight: bold;
+    }
+    @keyframes marquee {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+    #logout {
+      background: #e74c3c;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      float: right;
+    }
+    #student-info { margin: 10px 0; }
+    .student-info { text-align: center; margin: 10px 0; }
+    #userImage {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 3px solid #27ae60;
+      object-fit: cover;
+    }
+    .section-toggle {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 20px 0;
+    }
+    .section-btn {
+      background: #3498db;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .section-btn.active { background: #27ae60; }
+    .exam-info {
+      background: #34495e;
+      padding: 8px;
+      border-radius: 5px;
+      margin: 10px 0;
+      font-size: 1.1em;
+    }
+    #timer {
+      font-size: 1.5em;
+      font-weight: bold;
+      margin: 10px 0;
+      color: #f1c40f;
+    }
     .container {
       background: white;
-      border-radius: 12px;
-      padding: 25px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 15px 0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
-    h2 {
-      text-align: center;
-      color: #2c3e50;
-      margin-bottom: 30px;
+    .option-group {
+      margin: 10px 0;
+      padding: 8px;
+      background: #f8f9fa;
+      border-radius: 5px;
+      cursor: pointer;
     }
-    .question {
-      margin-bottom: 30px;
-      padding: 15px;
-      border-left: 4px solid #3498db;
-      background: #f9f9f9;
-    }
-    .question p {
-      font-weight: bold;
-      margin: 0 0 10px 0;
-    }
-    label {
-      display: block;
-      margin: 8px 0;
+    .option-group:hover { background: #e9ecef; }
+    .option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
       cursor: pointer;
     }
     .nav-buttons {
       display: flex;
       justify-content: space-between;
-      margin-top: 30px;
+      margin-top: 20px;
     }
-    button {
+    .btn-cool {
       background: #3498db;
       color: white;
       border: none;
       padding: 10px 20px;
-      border-radius: 6px;
+      border-radius: 5px;
       cursor: pointer;
-      font-size: 16px;
-      transition: 0.2s;
     }
-    button:hover {
-      background: #2980b9;
+    .btn-cool:hover { background: #2980b9; }
+    .questionButtons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 15px;
+      justify-content: center;
     }
-    button:disabled {
-      background: #bdc3c7;
-      cursor: not-allowed;
+    .question-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: none;
+      background: #eee;
+      cursor: pointer;
     }
-    .submit-btn {
-      background: #27ae60;
-      margin-top: 20px;
-      width: 100%;
-    }
-    .test-btn {
-      background: #f39c12;
-      margin-top: 10px;
-      width: 100%;
-    }
-    .message {
-      margin-top: 20px;
-      padding: 12px;
-      border-radius: 6px;
-      text-align: center;
-      display: none;
-    }
-    .success {
-      background: #d4edda;
-      color: #155724;
-      border: 1px solid #c3e6cb;
-    }
-    .error {
-      background: #f8d7da;
-      color: #721c24;
-      border: 1px solid #f5c6cb;
-    }
-    .debug-panel {
-      background: #2c3e50;
-      color: #ecf0f1;
-      border-radius: 8px;
-      margin-top: 20px;
-      padding: 15px;
-      font-family: 'Courier New', monospace;
-      font-size: 12px;
-      overflow-x: auto;
-    }
-    .debug-panel h3 {
-      margin: 0 0 10px 0;
-      font-size: 16px;
-    }
-    .debug-log {
-      background: #1e2a36;
+    #userAnswerCount {
+      display: flex;
+      justify-content: space-between;
+      background: #ecf0f1;
       padding: 10px;
-      border-radius: 4px;
-      max-height: 200px;
-      overflow-y: auto;
-      white-space: pre-wrap;
-      word-break: break-all;
+      border-radius: 5px;
+      margin: 10px 0;
     }
-    .debug-log p {
-      margin: 5px 0;
-      border-bottom: 1px solid #3e5a6c;
-      padding-bottom: 4px;
+    .windows-activate {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.8em;
+      color: #7f8c8d;
     }
+    .theory-status, .theory-nav-buttons { margin: 10px 0; text-align: center; }
+    .theory-btn {
+      background: #3498db;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      margin: 0 5px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #theoryAnswer { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+    .theory-image-wrapper { text-align: center; margin: 10px 0; }
+    .theory-question-image { max-width: 100%; max-height: 300px; }
   </style>
 </head>
-<body>
-<div class="container">
-  <h2>JSS1 Mathematics Examination (Debug Mode)</h2>
-  <div id="examArea"></div>
-  <div class="nav-buttons">
-    <button id="prevBtn" disabled>Previous</button>
-    <button id="nextBtn">Next</button>
+<body oncontextmenu="return false">
+<div id="header">
+  <div id="logout-container">
+    <button id="logout" onclick="logout()">Logout</button>
+    <div class="marquee-container"><span class="marquee-text">CANAANLAND GROUP OF SCHOOLS : GOD IS OUR STRENGTH</span></div>
   </div>
-  <button id="submitBtn" class="submit-btn">Submit Exam</button>
-  <button id="testBtn" class="test-btn">Test Connection</button>
-  <div id="message" class="message"></div>
-  
-  <div class="debug-panel">
-    <h3>🔍 Debug Console</h3>
-    <div id="debugLog" class="debug-log">
-      <p>Ready. Click 'Test Connection' or submit an exam.</p>
+  <div id="student-info">
+    <center><strong>ATTENTION! CLICK ON SUBMIT BUTTON BEFORE YOUR TIME IS UP TO SAVE YOUR SCORE</strong></center>
+    <center><p id="datetime"></p></center>
+    <div id="welcome-message"><label id="usernameDisplay"></label></div>
+    <div class="student-info">
+      <img id="userImage" src="img/default_user.jpg" alt="Student Image">
+      <h2 id="username">Student Name</h2>
+    </div>
+  </div>
+  <center><h3>CANAANLAND GROUP OF SCHOOLS EKUTE QUARTERS ADO EKITI</h3></center>
+  <center><h3>SECOND TERM EXAMINATION 2025/2026 ACADEMIC SESSION</h3></center>
+  <div class="section-toggle">
+    <button id="objectivesBtn" class="section-btn active" onclick="showSection('objectives')">OBJECTIVE QUESTIONS</button>
+    <button id="theoryBtn" class="section-btn" onclick="showSection('theory')">THEORY QUESTIONS</button>
+  </div>
+  <div class="exam-info">Exam: <span id="examInfo" style="color: lime;">MATHEMATICS - JSS1 (SECOND TERM)</span></div>
+  <div id="timer"></div>
+</div>
+
+<!-- OBJECTIVES SECTION -->
+<div id="objectivesSection">
+  <div class="container">
+    <h5 style="color: #d35400; text-align: center;">INSTRUCTIONS: READ THE QUESTIONS CAREFULLY BEFORE YOU CHOOSE YOUR ANSWER</h5>
+    <div class="scroll-container"><div id="questionText"></div></div>
+    <div id="questionImageContainer"></div>
+    <div class="option-group"><label class="option"><strong>A.</strong><input type="radio" name="option" value="A"> <span id="optA"></span></label></div>
+    <div class="option-group"><label class="option"><strong>B.</strong><input type="radio" name="option" value="B"> <span id="optB"></span></label></div>
+    <div class="option-group"><label class="option"><strong>C.</strong><input type="radio" name="option" value="C"> <span id="optC"></span></label></div>
+    <div class="option-group"><label class="option"><strong>D.</strong><input type="radio" name="option" value="D"> <span id="optD"></span></label></div>
+  </div>
+  <div class="nav-buttons">
+    <button onclick="prevQuestion()" class="btn-cool">Previous</button>
+    <button onclick="nextQuestion()" class="btn-cool">Next</button>
+    <button onclick="submitExam()" class="btn-cool">Submit Objectives</button>
+  </div>
+  <div class="container"><div id="questionButtons" class="questionButtons"></div></div>
+</div>
+
+<!-- THEORY SECTION -->
+<div id="theorySection" style="display:none;">
+  <h3 style="text-align: center; color: #d35400; margin-bottom: 20px;">THEORY QUESTIONS SECTION</h3>
+  <div class="theory-status" id="theoryStatus">Question 1 of 5 | Saved: 0/5</div>
+  <div id="theoryQuestionContainer">
+    <p id="theoryQuestionText">Loading theory questions...</p>
+    <div id="theoryImageContainer"></div>
+    <textarea id="theoryAnswer" rows="8" placeholder="Write your detailed answer here..."></textarea>
+    <div class="theory-nav-buttons">
+      <button onclick="prevTheoryQuestion()" class="theory-btn theory-prev-btn">Previous</button>
+      <button onclick="saveTheoryAnswer()" class="theory-btn theory-save-btn">Save Answer</button>
+      <button onclick="nextTheoryQuestion()" class="theory-btn theory-next-btn">Next</button>
+      <button onclick="submitTheoryExam()" class="theory-btn theory-submit-btn">Submit Theory</button>
     </div>
   </div>
 </div>
 
+<div id="userAnswerCount">
+  <p id="answeredLabel">Answered: 0/5</p>
+  <p id="unansweredLabel">Unanswered: 5/5</p>
+</div>
+
+<div class="marquee-container"><span class="marquee-text">2ND TERM EXAMINATIONS 2025/2026 ACADEMIC SESSION</span></div>
+<div class="windows-activate"><p> &copy; cbt.<span style="color: red;">canaanlandmodelgroupof</span><span style="color: green;">schools</span>.org</p></div>
+
 <script>
-  // NEW URL from your latest Apps Script deployment
-  const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbx8xxHpRwIrpP0pUqpyxb-dQJMXt7lMAoxJT7F3plyUUYGkYZR4SFV9bgU4VCGFC_jg1w/exec';
-    //https://script.google.com/macros/s/AKfycbx8xxHpRwIrpP0pUqpyxb-dQJMXt7lMAoxJT7F3plyUUYGkYZR4SFV9bgU4VCGFC_jg1w/exec
-  //AKfycbx8xxHpRwIrpP0pUqpyxb-dQJMXt7lMAoxJT7F3plyUUYGkYZR4SFV9bgU4VCGFC_jg1w
-  // ---------- QUESTION DATA ----------
-  const questions = [
-    { text: "What is the value of 7 × 8?", options: ["48", "56", "64", "72"] },
-    { text: "Simplify: 15 - 3 × 2 + 4", options: ["10", "13", "16", "19"] },
-    { text: "Which of these is a prime number?", options: ["21", "27", "29", "33"] },
-    { text: "If a = 3 and b = 4, what is a² + b²?", options: ["7", "12", "25", "49"] },
-    { text: "What is the LCM of 6 and 8?", options: ["12", "24", "36", "48"] }
+  // ================== CONFIGURATION ==================
+  const WEB_APP_URL = 'YOUR_APPS_SCRIPT_URL'; // <-- Replace with your /exec URL
+
+  // Get stored username and image from sessionStorage (assumes login page sets these)
+  const username = sessionStorage.getItem('username') || 'admin';
+  const userImage = sessionStorage.getItem('image') || 'img/default_user.jpg';
+  const usernameElem = document.getElementById("username");
+  if (usernameElem) usernameElem.innerText = username;
+  const userImageElem = document.getElementById("userImage");
+  if (userImageElem) userImageElem.src = userImage;
+  const usernameDisplayElem = document.getElementById("usernameDisplay");
+  if (usernameDisplayElem) usernameDisplayElem.innerText = "WELCOME: " + username;
+
+  // ================== STATIC QUESTIONS DATA ==================
+  const staticObjectivesQuestions = [
+    { id: 1, question: "What is the value of 7 × 8?", options: { A: "48", B: "56", C: "64", D: "72" }, answer: "B", image: null },
+    { id: 2, question: "Simplify: 15 - 3 × 2 + 4", options: { A: "10", B: "13", C: "16", D: "19" }, answer: "B", image: null },
+    { id: 3, question: "Which of these is a prime number?", options: { A: "21", B: "27", C: "29", D: "33" }, answer: "C", image: null },
+    { id: 4, question: "If a = 3 and b = 4, what is a² + b²?", options: { A: "7", B: "12", C: "25", D: "49" }, answer: "C", image: null },
+    { id: 5, question: "What is the LCM of 6 and 8?", options: { A: "12", B: "24", C: "36", D: "48" }, answer: "B", image: null }
   ];
 
-  let userAnswers = new Array(questions.length).fill(-1);
-  let currentIndex = 0;
+  const staticTheoryQuestions = [
+    { id: 1, question: "a. What is a prime number? b. List three prime numbers between 10 and 20.", marks: 5, image: null },
+    { id: 2, question: "Solve: 5x - 7 = 3x + 9", marks: 5, image: null }
+  ];
 
-  const examArea = document.getElementById('examArea');
-  const prevBtn = document.getElementById('prevBtn');
-  const nextBtn = document.getElementById('nextBtn');
-  const submitBtn = document.getElementById('submitBtn');
-  const testBtn = document.getElementById('testBtn');
-  const messageDiv = document.getElementById('message');
-  const debugLog = document.getElementById('debugLog');
+  let questions = staticObjectivesQuestions;
+  let theoryQuestions = staticTheoryQuestions;
+  let currentQuestion = 0;
+  let userAnswers = new Array(questions.length).fill(null);
+  let theoryAnswers = new Array(theoryQuestions.length).fill("");
+  let currentTheory = 0;
+  let currentSection = "objectives";
 
-  function addDebugLog(msg) {
-    const p = document.createElement('p');
-    p.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
-    debugLog.appendChild(p);
-    debugLog.scrollTop = debugLog.scrollHeight;
-    console.log(msg);
+  // Timer variables
+  let timeLeft = 90 * 60; // 90 minutes
+  let timerInterval = null;
+  const timerEl = document.getElementById("timer");
+
+  // Helper: map math symbols
+  function mapMathSymbol(text) {
+    if (!text) return "";
+    return text.replace(/&theta;/g, "θ").replace(/&pi;/g, "π").replace(/&alpha;/g, "α")
+      .replace(/&beta;/g, "β").replace(/&gamma;/g, "γ").replace(/&delta;/g, "δ")
+      .replace(/&epsilon;/g, "ε").replace(/&phi;/g, "φ").replace(/&omega;/g, "ω")
+      .replace(/&mu;/g, "μ").replace(/&sigma;/g, "σ").replace(/&lambda;/g, "λ")
+      .replace(/&radic;/g, "√").replace(/&infin;/g, "∞").replace(/&int;/g, "∫")
+      .replace(/&sum;/g, "∑").replace(/&prod;/g, "∏").replace(/&deg;/g, "°")
+      .replace(/&times;/g, "×").replace(/&divide;/g, "÷").replace(/&plusmn;/g, "±")
+      .replace(/&le;/g, "≤").replace(/&ge;/g, "≥").replace(/&ne;/g, "≠")
+      .replace(/&frac12;/g, "½").replace(/&frac14;/g, "¼").replace(/&frac34;/g, "¾")
+      .replace(/\^(\d+)/g, "<sup>$1</sup>")
+      .replace(/\^\(([^)]+)\)/g, "<sup>$1</sup>")
+      .replace(/_(\d+)/g, "<sub>$1</sub>")
+      .replace(/\(([^)]+)\)/g, "<sub>$1</sub>");
   }
 
-  function renderCurrentQuestion() {
-    const q = questions[currentIndex];
-    let html = `<div class="question">
-                  <p>${currentIndex+1}. ${q.text}</p>`;
-    q.options.forEach((opt, idx) => {
-      const checked = (userAnswers[currentIndex] === idx) ? 'checked' : '';
-      html += `<label>
-                <input type="radio" name="q${currentIndex}" value="${idx}" ${checked}>
-                ${opt}
-               </label>`;
-    });
-    html += `</div>`;
-    examArea.innerHTML = html;
-
-    const radios = document.querySelectorAll(`input[name="q${currentIndex}"]`);
-    radios.forEach(radio => {
-      radio.addEventListener('change', (e) => {
-        userAnswers[currentIndex] = parseInt(e.target.value);
-        addDebugLog(`Question ${currentIndex+1} answer set to: ${e.target.value} (${questions[currentIndex].options[e.target.value]})`);
-      });
-    });
-
-    prevBtn.disabled = (currentIndex === 0);
-    nextBtn.disabled = (currentIndex === questions.length - 1);
+  // ================== TIMER ==================
+  function startTimer(seconds) {
+    if (!timerEl) return;
+    timeLeft = seconds;
+    timerInterval = setInterval(function() {
+      const hours = Math.floor(timeLeft / 3600);
+      const minutes = Math.floor((timeLeft % 3600) / 60);
+      const secs = timeLeft % 60;
+      let display = "";
+      if (hours > 0) display += hours + " Hr:";
+      if (minutes > 0 || hours > 0) display += minutes + " Min: ";
+      display += secs + " Sec";
+      timerEl.textContent = "Time Remaining: " + display;
+      timeLeft--;
+      if (timeLeft < 300) timerEl.style.color = "red";
+      if (timeLeft < 0) {
+        clearInterval(timerInterval);
+        alert("Time is up! Your exam will be submitted automatically.");
+        submitExam();
+      }
+    }, 1000);
   }
 
-  prevBtn.addEventListener('click', () => {
-    if (currentIndex > 0) {
-      currentIndex--;
-      renderCurrentQuestion();
-    }
-  });
-
-  nextBtn.addEventListener('click', () => {
-    if (currentIndex < questions.length - 1) {
-      currentIndex++;
-      renderCurrentQuestion();
-    }
-  });
-
-  function showMessage(msg, type) {
-    messageDiv.textContent = msg;
-    messageDiv.className = `message ${type}`;
-    messageDiv.style.display = 'block';
-    setTimeout(() => {
-      messageDiv.style.display = 'none';
-    }, 5000);
-  }
-
-  async function testConnection() {
-    addDebugLog(`🧪 Testing connection to: ${WEB_APP_URL}`);
-    try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 10000);
-      const response = await fetch(WEB_APP_URL, { method: 'GET', signal: controller.signal });
-      clearTimeout(timeoutId);
-      addDebugLog(`✅ GET response status: ${response.status} ${response.statusText}`);
-      const text = await response.text();
-      addDebugLog(`Response body (first 200 chars): ${text.substring(0, 200)}`);
-      showMessage('Connection test succeeded. Check debug console for details.', 'success');
-    } catch (err) {
-      addDebugLog(`❌ Connection test failed: ${err.name} - ${err.message}`);
-      showMessage(`Connection test failed: ${err.message}`, 'error');
+  // ================== OBJECTIVES FUNCTIONS ==================
+  function saveAnswer() {
+    const selected = document.querySelector("input[name='option']:checked");
+    if (selected) {
+      userAnswers[currentQuestion] = selected.value;
+      countUserSelections();
+      const btns = document.querySelectorAll(".question-btn");
+      if (btns[currentQuestion]) {
+        btns[currentQuestion].style.backgroundColor = "#337ab7";
+        btns[currentQuestion].style.color = "white";
+      }
     }
   }
 
-  testBtn.addEventListener('click', testConnection);
+  function displayQuestion() {
+    if (!questions.length) return;
+    if (currentQuestion >= questions.length) return;
+    const q = questions[currentQuestion];
+    const questionEl = document.getElementById("questionText");
+    const optA = document.getElementById("optA");
+    const optB = document.getElementById("optB");
+    const optC = document.getElementById("optC");
+    const optD = document.getElementById("optD");
+    if (questionEl) questionEl.innerHTML = (currentQuestion + 1) + ". " + mapMathSymbol(q.question);
+    if (optA) optA.innerHTML = mapMathSymbol(q.options.A);
+    if (optB) optB.innerHTML = mapMathSymbol(q.options.B);
+    if (optC) optC.innerHTML = mapMathSymbol(q.options.C);
+    if (optD) optD.innerHTML = mapMathSymbol(q.options.D);
 
-  submitBtn.addEventListener('click', async () => {
-    if (userAnswers.some(ans => ans === -1)) {
-      showMessage('Please answer all questions before submitting.', 'error');
-      addDebugLog('❌ Submission blocked: some questions unanswered.');
+    const imgContainer = document.getElementById("questionImageContainer");
+    if (imgContainer) {
+      imgContainer.innerHTML = q.image ? `<img src="${q.image}" style="max-width:100%; margin:10px 0;">` : "";
+    }
+    const radios = document.getElementsByName("option");
+    for (let i = 0; i < radios.length; i++) radios[i].checked = false;
+    if (userAnswers[currentQuestion]) {
+      const radioToCheck = document.querySelector(`input[name="option"][value="${userAnswers[currentQuestion]}"]`);
+      if (radioToCheck) radioToCheck.checked = true;
+    }
+    highlightCurrentButton();
+  }
+
+  function nextQuestion() { saveAnswer(); if (currentQuestion < questions.length - 1) { currentQuestion++; displayQuestion(); } }
+  function prevQuestion() { saveAnswer(); if (currentQuestion > 0) { currentQuestion--; displayQuestion(); } }
+
+  function renderQuestionButtons() {
+    const container = document.getElementById("questionButtons");
+    if (!container) return;
+    container.innerHTML = "";
+    for (let i = 0; i < questions.length; i++) {
+      const btn = document.createElement("button");
+      btn.textContent = i + 1;
+      btn.className = "question-btn";
+      btn.onclick = (function(idx) { return function() { saveAnswer(); currentQuestion = idx; displayQuestion(); }; })(i);
+      container.appendChild(btn);
+    }
+    highlightCurrentButton();
+  }
+
+  function highlightCurrentButton() {
+    const btns = document.querySelectorAll(".question-btn");
+    for (let i = 0; i < btns.length; i++) {
+      const answered = userAnswers[i] !== null;
+      const current = i === currentQuestion;
+      btns[i].style.backgroundColor = current ? "#5cb85c" : (answered ? "#337ab7" : "#eee");
+      btns[i].style.color = current || answered ? "white" : "black";
+    }
+  }
+
+  function countUserSelections() {
+    let answeredCount = 0;
+    for (let i = 0; i < userAnswers.length; i++) if (userAnswers[i] !== null) answeredCount++;
+    const answeredLabel = document.getElementById("answeredLabel");
+    const unansweredLabel = document.getElementById("unansweredLabel");
+    if (answeredLabel) answeredLabel.innerText = "Answered: " + answeredCount + "/" + questions.length;
+    if (unansweredLabel) unansweredLabel.innerText = "Unanswered: " + (questions.length - answeredCount);
+  }
+
+  // ================== SUBMIT ==================
+  async function submitExam() {
+    saveAnswer();
+    const allAnswered = userAnswers.every(ans => ans !== null);
+    if (!allAnswered) {
+      alert("Please answer all questions before submitting.");
       return;
     }
+    if (!confirm("Are you sure you want to submit your exam? You cannot change answers after submission.")) return;
 
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Submitting...';
+    clearInterval(timerInterval);
+    const radios = document.querySelectorAll("input[type='radio']");
+    for (let i = 0; i < radios.length; i++) radios[i].disabled = true;
+    const btns = document.querySelectorAll(".nav-buttons button");
+    for (let i = 0; i < btns.length; i++) btns[i].disabled = true;
 
     const payload = {
       answers: userAnswers,
-      username: 'admin'
+      username: username
     };
 
-    addDebugLog(`📤 Submitting to: ${WEB_APP_URL}`);
-    addDebugLog(`Payload: ${JSON.stringify(payload)}`);
-
     try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 15000);
       const response = await fetch(WEB_APP_URL, {
         method: 'POST',
-        mode: 'cors',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-        signal: controller.signal
+        body: JSON.stringify(payload)
       });
-      clearTimeout(timeoutId);
-      addDebugLog(`📥 Response status: ${response.status} ${response.statusText}`);
-      addDebugLog(`Response headers: ${JSON.stringify([...response.headers])}`);
-
-      let result;
-      try {
-        result = await response.json();
-        addDebugLog(`Response JSON: ${JSON.stringify(result)}`);
-      } catch (jsonErr) {
-        const text = await response.text();
-        addDebugLog(`❌ Failed to parse JSON. Raw response: ${text.substring(0, 500)}`);
-        throw new Error(`Invalid JSON response: ${jsonErr.message}`);
-      }
+      const result = await response.json();
 
       if (result.status === 'success') {
-        showMessage(`Exam submitted successfully! You scored ${result.score} out of ${result.total}.`, 'success');
-        addDebugLog(`✅ Exam successful. Score: ${result.score}/5`);
-        document.querySelectorAll('input[type="radio"]').forEach(r => r.disabled = true);
-        prevBtn.disabled = true;
-        nextBtn.disabled = true;
+        alert(`Exam submitted successfully!\nYour score: ${result.score} out of ${result.total}`);
+        window.location.href = "https://canaanland-model-schools.github.io/home/index.html";
       } else {
-        throw new Error(result.message || 'Unknown error from server');
+        throw new Error(result.message);
       }
     } catch (err) {
-      addDebugLog(`❌ Submission error: ${err.name} - ${err.message}`);
-      if (err.name === 'AbortError') {
-        showMessage('Request timed out. Check your network or Apps Script URL.', 'error');
-      } else if (err.message.includes('Failed to fetch')) {
-        showMessage('Failed to fetch: Could not connect to the server. Check CORS, URL, or network.', 'error');
-      } else {
-        showMessage('Error: ' + err.message, 'error');
+      alert("Error submitting exam: " + err.message);
+      // Optionally re-enable buttons here
+    }
+  }
+
+  // ================== THEORY FUNCTIONS ==================
+  function displayTheoryQuestion() {
+    if (theoryQuestions.length === 0) {
+      const theoryText = document.getElementById("theoryQuestionText");
+      if (theoryText) theoryText.innerText = "No theory questions available.";
+      return;
+    }
+    const tq = theoryQuestions[currentTheory];
+    const theoryText = document.getElementById("theoryQuestionText");
+    const theoryAnswer = document.getElementById("theoryAnswer");
+    if (theoryText) theoryText.innerHTML = mapMathSymbol((currentTheory + 1) + ". " + tq.question + (tq.marks ? " [" + tq.marks + " marks]" : ""));
+    if (theoryAnswer) theoryAnswer.value = theoryAnswers[currentTheory] || "";
+    const imgContainer = document.getElementById("theoryImageContainer");
+    if (imgContainer) {
+      imgContainer.innerHTML = tq.image ? `<div class="theory-image-wrapper"><img src="${tq.image}" class="theory-question-image"></div>` : "";
+    }
+    updateTheoryStatus();
+  }
+
+  function updateTheoryStatus() {
+    let saved = 0;
+    for (let i = 0; i < theoryAnswers.length; i++) if (theoryAnswers[i].trim() !== "") saved++;
+    const statusEl = document.getElementById("theoryStatus");
+    if (statusEl) statusEl.innerText = "Question " + (currentTheory + 1) + " of " + theoryQuestions.length + " | Saved: " + saved + "/" + theoryQuestions.length;
+  }
+
+  function saveTheoryAnswer() {
+    const answer = document.getElementById("theoryAnswer").value.trim();
+    theoryAnswers[currentTheory] = answer;
+    localStorage.setItem("theoryAnswer_" + currentTheory, answer);
+    updateTheoryStatus();
+    alert("Theory answer saved locally.");
+  }
+
+  function nextTheoryQuestion() { if (currentTheory < theoryQuestions.length - 1) { currentTheory++; displayTheoryQuestion(); } else alert("You've reached the last theory question."); }
+  function prevTheoryQuestion() { if (currentTheory > 0) { currentTheory--; displayTheoryQuestion(); } }
+  function submitTheoryExam() {
+    const savedCount = theoryAnswers.filter(a => a.trim() !== "").length;
+    if (confirm("Theory section completed!\nYou have answered " + savedCount + " out of " + theoryQuestions.length + " theory questions.\n\nAre you sure you want to submit?")) {
+      alert("Theory answers submitted locally. (No server save for theory yet.)");
+    }
+  }
+
+  // ================== DATE & TIME ==================
+  function updateDateTime() {
+    let now = new Date();
+    let day = now.getDate();
+    let month = now.toLocaleString("default", { month: "long" });
+    let year = now.getFullYear();
+    let suffix = "th";
+    if (day === 1 || day === 21 || day === 31) suffix = "st";
+    else if (day === 2 || day === 22) suffix = "nd";
+    else if (day === 3 || day === 23) suffix = "rd";
+    let hours = now.getHours();
+    let minutes = now.getMinutes();
+    let seconds = now.getSeconds();
+    let ampm = hours >= 12 ? "PM" : "AM";
+    hours = hours % 12 || 12;
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+    const dateTimeEl = document.getElementById("datetime");
+    if (dateTimeEl) dateTimeEl.innerText = month + " " + day + suffix + " " + year + ", " + hours + ":" + minutes + ":" + seconds + " " + ampm;
+  }
+
+  // ================== SECTION TOGGLE ==================
+  function showSection(section) {
+    currentSection = section;
+    const objBtn = document.getElementById("objectivesBtn");
+    const thBtn = document.getElementById("theoryBtn");
+    const objSec = document.getElementById("objectivesSection");
+    const thSec = document.getElementById("theorySection");
+    if (objBtn) objBtn.classList.toggle("active", section === "objectives");
+    if (thBtn) thBtn.classList.toggle("active", section === "theory");
+    if (objSec) objSec.style.display = section === "objectives" ? "block" : "none";
+    if (thSec) thSec.style.display = section === "theory" ? "block" : "none";
+    if (section === "theory") displayTheoryQuestion();
+  }
+
+  // ================== ANTI-CHEAT & LOGOUT ==================
+  document.addEventListener("keydown", function(e) {
+    const key = e.key.toUpperCase();
+    if (currentSection === "objectives") {
+      if (["A","B","C","D"].includes(key)) {
+        const radio = document.querySelector(`input[name="option"][value="${key}"]`);
+        if (radio) { radio.checked = true; saveAnswer(); }
       }
-    } finally {
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Submit Exam';
+      if (e.key === "ArrowRight") nextQuestion();
+      else if (e.key === "ArrowLeft") prevQuestion();
+    } else if (currentSection === "theory") {
+      if (e.key === "ArrowRight") nextTheoryQuestion();
+      else if (e.key === "ArrowLeft") prevTheoryQuestion();
+      if (e.ctrlKey && e.key === "s") { e.preventDefault(); saveTheoryAnswer(); }
+    }
+    if (e.key === "F12" || (e.ctrlKey && e.shiftKey && e.key === "I") ||
+        (e.ctrlKey && e.shiftKey && e.key === "J") || (e.ctrlKey && e.key === "u")) {
+      e.preventDefault(); alert("Developer tools are disabled.");
     }
   });
+  document.addEventListener("contextmenu", function(e) { e.preventDefault(); alert("Right-click is disabled."); });
 
-  renderCurrentQuestion();
-  addDebugLog(`🎓 Exam page loaded. Web App URL: ${WEB_APP_URL}`);
-  addDebugLog(`ℹ️ If you see "Failed to fetch", check: 1) URL is correct (/exec), 2) Apps Script deployed, 3) CORS headers set, 4) Network/firewall.`);
+  function logout() { if (confirm("Logout?")) window.location.href = "index.html"; }
+
+  // ================== INITIALIZATION ==================
+  window.onload = function() {
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
+    displayQuestion();
+    renderQuestionButtons();
+    countUserSelections();
+    updateTheoryStatus();
+    startTimer(90 * 60);
+  };
 </script>
 </body>
 </html>
