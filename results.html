@@ -520,236 +520,159 @@
         <p>Computer-Based Testing Portal - canaanland model Schools</p>
     </footer>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
-<script>
-    // ========== CONFIGURATION ==========
-
-    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxrvvN8qlD6-v8io34IKNB_SOqk154WNjwKtZ37VYtqmhdyXWaIbz53dDcKKPX9oolBHw/exec';
-
-
-      // Send attempt to Google Sheets (fire and forget)
-        function sendAttemptToSheet(username, className, subject) {
-            fetch(WEB_APP_URL, {
-                method: 'POST',
-                mode: 'no-cors', // Required because page is on GitHub Pages
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    action: 'attempt',
-                    username: username,
-                    class: className,
-                    subject: subject
-                })
-            }).catch(console.error);
-        }
- 
-
-
-    // ========== ATTEMPT TRACKING (localStorage) ==========
-    function getExamAttempts(cls) {
-        const key = `${cls}_exam_attempts`;
-        const stored = localStorage.getItem(key);
-        return stored ? JSON.parse(stored) : {};
-    }
-
-    function saveExamAttempts(cls, data) {
-        const key = `${cls}_exam_attempts`;
-        localStorage.setItem(key, JSON.stringify(data));
-    }
-
-    function markExamCompleted(cls, sub, username) {
-        const attempts = getExamAttempts(cls);
-        if (!attempts[username]) {
-            attempts[username] = {};
-        }
-        attempts[username][sub] = true;
-        saveExamAttempts(cls, attempts);
-        console.log(`Exam attempt marked as completed for ${username} - ${sub} in ${cls}`);
-    }
-
-    // ========== SEND CONFIRMATION TO GOOGLE SHEETS (optional) ==========
-   /* function sendConfirmationToSheet(username, className, subject) {
-        fetch(WEB_APP_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                action: 'confirm',          // you can add a new action in Apps Script if needed
-                username: username,
-                class: className,
-                subject: subject
-            })
-        }).catch(err => console.error('Confirmation send failed:', err));
-    }
-
-    // ========== CONFIRM ATTEMPT ==========
-    function confirmAttempt() {
-        const cls = localStorage.getItem("pendingClass");
-        const sub = localStorage.getItem("pendingSubject");
-        const username = localStorage.getItem("pendingUsername");
-
-        if (!cls || !sub || !username) {
-            alert("Error: Could not confirm attempt. Please contact administrator.");
-            return;
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script>
+        // ✅ Helper functions for attempt tracking
+        function getExamAttempts(cls) {
+            const key = `${cls}_exam_attempts`;
+            const stored = localStorage.getItem(key);
+            return stored ? JSON.parse(stored) : {};
         }
 
-        // Mark the exam as completed in localStorage
-        markExamCompleted(cls, sub, username);
+        function saveExamAttempts(cls, data) {
+            const key = `${cls}_exam_attempts`;
+            localStorage.setItem(key, JSON.stringify(data));
+        }
 
-        // (Optional) Send confirmation to Google Sheets
-        sendConfirmationToSheet(username, cls, sub);
-
-        // Remove pending flags
-        localStorage.removeItem("pendingClass");
-        localStorage.removeItem("pendingSubject");
-        localStorage.removeItem("pendingUsername");
-
-        // Hide confirmation section
-        document.getElementById("confirmationSection").style.display = "none";
-
-        alert("✅ Your exam attempt has been confirmed successfully!\n\nYou have completed this exam.");
-        window.location.href = "index.html";
-    }*/
-                
-            // ========== SEND CONFIRMATION (optional) ==========
-            function sendConfirmationToSheet(username, className, subject) {
-                fetch(WEB_APP_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        action: 'confirm',
-                        username: username,
-                        class: className,
-                        subject: subject
-                    })
-                }).catch(err => console.error('Confirmation send failed:', err));
+        function markExamCompleted(cls, sub, username) {
+            const attempts = getExamAttempts(cls);
+            if (!attempts[username]) {
+                attempts[username] = {};
             }
+            attempts[username][sub] = true;
+            saveExamAttempts(cls, attempts);
+            console.log(`Exam attempt marked as completed for ${username} - ${sub} in ${cls}`);
+        }
 
-            function confirmAttempt() {
-                const cls = localStorage.getItem("pendingClass");
-                const sub = localStorage.getItem("pendingSubject");
-                const username = localStorage.getItem("pendingUsername");
-
-                if (!cls || !sub || !username) {
-                    alert("Error: Could not confirm attempt. Please contact administrator.");
-                    return;
-                }
-
-                markExamCompleted(cls, sub, username);
-                sendConfirmationToSheet(username, cls, sub);
-
-                localStorage.removeItem("pendingClass");
-                localStorage.removeItem("pendingSubject");
-                localStorage.removeItem("pendingUsername");
-
-                document.getElementById("confirmationSection").style.display = "none";
-                alert("✅ Your exam attempt has been confirmed successfully!\n\nYou have completed this exam.");
-                window.location.href = "index.html";
+        // ✅ Confirm attempt function
+        function confirmAttempt() {
+            const cls = localStorage.getItem("pendingClass");
+            const sub = localStorage.getItem("pendingSubject");
+            const username = localStorage.getItem("pendingUsername");
+           
+            if (!cls || !sub || !username) {
+                alert("Error: Could not confirm attempt. Please contact administrator.");
+                return;
             }
+           
+            // Mark the exam as completed
+            markExamCompleted(cls, sub, username);
+           
+            // Remove pending flags
+            localStorage.removeItem("pendingClass");
+            localStorage.removeItem("pendingSubject");
+            localStorage.removeItem("pendingUsername");
+           
+            // Hide confirmation section
+            document.getElementById("confirmationSection").style.display = "none";
+           
+            // Show success message
+            alert("✅ Your exam attempt has been confirmed successfully!\n\nYou have completed this exam .");
+            window.location.href = "index.html";
+        }
 
-
-    // ========== LOAD DATA ON PAGE LOAD ==========
-    document.addEventListener('DOMContentLoaded', function() {
-        // Get exam information
-        const examInfo = localStorage.getItem('examInfo') || '';
-        const examClass = localStorage.getItem('examClass') || '';
-        const examSubject = localStorage.getItem('examSubject') || '';
-
-        // Display exam information
-        document.getElementById('examInfoHeader').textContent = examSubject ? `${examSubject.toUpperCase()} EXAMINATION RESULTS` : 'EXAMINATION RESULTS';
-        document.getElementById('examDetails').textContent = examInfo || 'Exam Results';
-
-        // Get student information
-        const username = localStorage.getItem('examUser') || sessionStorage.getItem('username') || 'Student';
-        const userImage = sessionStorage.getItem('image') || 'default_user.jpg';
-
-        // Get exam results
-        const score = localStorage.getItem('examScore') || 0;
-        const totalQuestions = localStorage.getItem('totalQuestions') || 5;
-
-        // Calculate percentage
-        const percentage = Math.round((score / totalQuestions) * 100);
-
-        // Set student information
-        document.getElementById('studentName').textContent = username;
-        document.getElementById('studentImage').src = sessionStorage.getItem('image') || 'img/default_user.jpg';
-
-        // Set score information
-        document.getElementById('scoreValue').textContent = score;
-        document.getElementById('totalQuestions').textContent = totalQuestions;
-        document.getElementById('scorePercentage').textContent = percentage + '%';
-
-        // Set details (if you have them)
-        if (document.getElementById('detailCorrect')) {
+        // Get data from localStorage
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get exam information
+            const examInfo = localStorage.getItem('examInfo') || '';
+            const examClass = localStorage.getItem('examClass') || '';
+            const examSubject = localStorage.getItem('examSubject') || '';
+           
+            // Display exam information
+            document.getElementById('examInfoHeader').textContent = examSubject ? `${examSubject.toUpperCase()} EXAMINATION RESULTS` : 'EXAMINATION RESULTS';
+            document.getElementById('examDetails').textContent = examInfo || 'Exam Results';
+           
+            // Get student information
+            const username = localStorage.getItem('examUser') || sessionStorage.getItem('username') || 'Student';
+            const userImage = sessionStorage.getItem('image') || 'default_user.jpg';
+            //document.getElementById('userImage').src = sessionStorage.getItem('image') || 'img/default_user.jpg';
+           
+            // Get exam results
+            const score = localStorage.getItem('examScore') || 0;
+            const totalQuestions = localStorage.getItem('totalQuestions') || 5;
+           
+            // Calculate percentage
+            const percentage = Math.round((score / totalQuestions) * 100);
+           
+            // Set student information
+            document.getElementById('studentName').textContent = username;
+            //document.getElementById('studentImage').src = 'img/' + userImage;
+             document.getElementById('studentImage').src = sessionStorage.getItem('image') || 'img/default_user.jpg';
+           
+            // Set score information
+            document.getElementById('scoreValue').textContent = score;
+            document.getElementById('totalQuestions').textContent = totalQuestions;
+            document.getElementById('scorePercentage').textContent = percentage + '%';
+           
+            // Set details
             document.getElementById('detailCorrect').textContent = score;
             document.getElementById('detailIncorrect').textContent = totalQuestions - score;
             document.getElementById('detailTotal').textContent = totalQuestions;
             document.getElementById('detailPercentage').textContent = percentage + '%';
-        }
-
-        // Update score message
-        document.getElementById('scoreMessage').textContent =
-            `You've successfully completed your test and your score for this test is ${score}/${totalQuestions}`;
-
-        // Set performance message and color
-        const performanceMessage = document.getElementById('performanceMessage');
-        const scoreCircle = document.getElementById('scoreCircle');
-
-        if (percentage >= 80) {
-            performanceMessage.textContent = 'EXCELLENT PERFORMANCE!';
-            performanceMessage.style.backgroundColor = '#4CAF50';
-            performanceMessage.style.color = 'white';
-            scoreCircle.style.background = 'linear-gradient(135deg, #4CAF50, #8BC34A)';
-        } else if (percentage >= 60) {
-            performanceMessage.textContent = 'GOOD PERFORMANCE';
-            performanceMessage.style.backgroundColor = '#2196F3';
-            performanceMessage.style.color = 'white';
-            scoreCircle.style.background = 'linear-gradient(135deg, #2196F3, #03A9F4)';
-        } else if (percentage >= 50) {
-            performanceMessage.textContent = 'FAIR PERFORMANCE';
-            performanceMessage.style.backgroundColor = '#FF9800';
-            performanceMessage.style.color = 'white';
-            scoreCircle.style.background = 'linear-gradient(135deg, #FF9800, #FFC107)';
-        } else {
-            performanceMessage.textContent = 'NEEDS IMPROVEMENT';
-            performanceMessage.style.backgroundColor = '#F44336';
-            performanceMessage.style.color = 'white';
-            scoreCircle.style.background = 'linear-gradient(135deg, #F44336, #E91E63)';
-        }
-
-        // Set current date
-        const now = new Date();
-        const options = { year: 'numeric', month: 'long', day: 'numeric' };
-        const formattedDate = now.toLocaleDateString('en-US', options);
-        document.getElementById('examDate').textContent = 'Date: ' + formattedDate;
-
-        // Check if attempt is already confirmed (no pending data)
-        const cls = localStorage.getItem("pendingClass");
-        const sub = localStorage.getItem("pendingSubject");
-        const usernameCheck = localStorage.getItem("pendingUsername");
-
-        if (!cls || !sub || !usernameCheck) {
-            // Already confirmed, hide confirmation section
-            const confSection = document.getElementById("confirmationSection");
-            if (confSection) confSection.style.display = "none";
-        }
-
-        // Button event listeners
-        const printBtn = document.getElementById('printBtn');
-        if (printBtn) {
-            printBtn.addEventListener('click', function() {
+           
+            // Update score message with actual score
+            document.getElementById('scoreMessage').textContent =
+                `You've successfully completed your test and your score for this test is ${score}/${totalQuestions}`;
+           
+            // Set performance message and color
+            const performanceMessage = document.getElementById('performanceMessage');
+            const scoreCircle = document.getElementById('scoreCircle');
+           
+            if (percentage >= 80) {
+                performanceMessage.textContent = 'EXCELLENT PERFORMANCE!';
+                performanceMessage.style.backgroundColor = '#4CAF50';
+                performanceMessage.style.color = 'white';
+                scoreCircle.style.background = 'linear-gradient(135deg, #4CAF50, #8BC34A)';
+            } else if (percentage >= 60) {
+                performanceMessage.textContent = 'GOOD PERFORMANCE';
+                performanceMessage.style.backgroundColor = '#2196F3';
+                performanceMessage.style.color = 'white';
+                scoreCircle.style.background = 'linear-gradient(135deg, #2196F3, #03A9F4)';
+            } else if (percentage >= 50) {
+                performanceMessage.textContent = 'FAIR PERFORMANCE';
+                performanceMessage.style.backgroundColor = '#FF9800';
+                performanceMessage.style.color = 'white';
+                scoreCircle.style.background = 'linear-gradient(135deg, #FF9800, #FFC107)';
+            } else {
+                performanceMessage.textContent = 'NEEDS IMPROVEMENT';
+                performanceMessage.style.backgroundColor = '#F44336';
+                performanceMessage.style.color = 'white';
+                scoreCircle.style.background = 'linear-gradient(135deg, #F44336, #E91E63)';
+            }
+           
+            // Set current date
+            const now = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            const formattedDate = now.toLocaleDateString('en-US', options);
+           
+            document.getElementById('examDate').textContent = 'Date: ' + formattedDate;
+           
+            // Check if attempt is already confirmed
+            const cls = localStorage.getItem("pendingClass");
+            const sub = localStorage.getItem("pendingSubject");
+            const usernameCheck = localStorage.getItem("pendingUsername");
+           
+            if (!cls || !sub || !usernameCheck) {
+                // Attempt already confirmed, hide confirmation section
+                document.getElementById("confirmationSection").style.display = "none";
+            }
+           
+            // Button event listeners
+            document.getElementById('printBtn').addEventListener('click', function() {
                 window.print();
             });
-        }
-
-        const dashboardBtn = document.getElementById('dashboardBtn');
-        if (dashboardBtn) {
-            dashboardBtn.addEventListener('click', function() {
+           
+            document.getElementById('dashboardBtn').addEventListener('click', function() {
                 window.location.href = 'index.html';
             });
-        }
-    });
+        });
 
-    function logout() {
-        window.location.href = "index.html";
-    }
-</script>
+
+        function logout() {
+          
+                window.location.href = "index.html";
+            
+        }
+    </script>
+</body>
+</html>
