@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JSS1 Mathematics Exam</title>
+  <title>JSS1 Mathematics Exam (Debug)</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -160,6 +160,43 @@
     #theoryAnswer { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
     .theory-image-wrapper { text-align: center; margin: 10px 0; }
     .theory-question-image { max-width: 100%; max-height: 300px; }
+
+    /* Debug panel styles */
+    .debug-panel {
+      margin-top: 30px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: #f9f9f9;
+      padding: 10px;
+    }
+    .debug-panel h3 {
+      margin: 0 0 8px 0;
+      font-size: 1.1em;
+      color: #e67e22;
+    }
+    .debug-log {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      padding: 10px;
+      border-radius: 4px;
+      max-height: 200px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    .debug-log p {
+      margin: 2px 0;
+      border-bottom: 1px solid #333;
+      padding: 2px 0;
+    }
+    .download-log-btn {
+      background: #e67e22;
+      margin-top: 8px;
+      padding: 5px 10px;
+      font-size: 0.9em;
+    }
   </style>
 </head>
 <body oncontextmenu="return false">
@@ -228,12 +265,67 @@
   <p id="unansweredLabel">Unanswered: 5/5</p>
 </div>
 
-<div class="marquee-container"><span class="marquee-text">2ND TERM EXAMINATIONS 2025/2026 ACADEMIC SESSION</span></div>
+<div class="marquee-container"><span class="marquee-text">2ND TERMZ EXAMINATIONS 2025/2026 ACADEMIC SESSION</span></div>
 <div class="windows-activate"><p> &copy; cbt.<span style="color: red;">canaanlandmodelgroupof</span><span style="color: green;">schools</span>.org</p></div>
+
+<!-- Debug Panel -->
+<div class="debug-panel">
+  <h3>🔍 Debug Console</h3>
+  <div id="debugLog" class="debug-log"></div>
+  <button id="downloadLogBtn" class="btn-cool download-log-btn">📥 Download Log</button>
+</div>
 
 <script>
   // ================== CONFIGURATION ==================
   const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyIpUmmG_S0zR-Pt7-7uuY8IEm6IUBUzkkCqZXIKMFBKmqRTrgqXD0TyNK_DXMHidGVTA/exec'; // <-- Replace with your /exec URL
+
+  // Debug logging array
+  let debugEntries = [];
+
+  // Helper: add a log entry (also displayed on screen)
+  function addDebugLog(message, data = null) {
+    const timestamp = new Date().toISOString();
+    let logLine = `[${timestamp}] ${message}`;
+    if (data !== null) {
+      try {
+        logLine += `\n   Data: ${JSON.stringify(data, null, 2)}`;
+      } catch (e) {
+        logLine += `\n   Data: [unable to stringify]`;
+      }
+    }
+    debugEntries.push(logLine);
+    // Also display in the debug panel
+    const debugDiv = document.getElementById('debugLog');
+    if (debugDiv) {
+      const p = document.createElement('p');
+      p.textContent = logLine;
+      debugDiv.appendChild(p);
+      debugDiv.scrollTop = debugDiv.scrollHeight;
+    }
+    // Also log to browser console for extra visibility
+    console.log(logLine);
+  }
+
+  // Function to download the log as a text file
+  function downloadLog() {
+    const content = debugEntries.join('\n\n');
+    const blob = new Blob([content], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `exam_debug_log_${new Date().toISOString().replace(/[:.]/g, '-')}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    addDebugLog('Debug log downloaded.');
+  }
+
+  // Attach download button event after page loads
+  document.addEventListener('DOMContentLoaded', () => {
+    const downloadBtn = document.getElementById('downloadLogBtn');
+    if (downloadBtn) downloadBtn.addEventListener('click', downloadLog);
+  });
 
   // Get stored username and image from sessionStorage (assumes login page sets these)
   const username = sessionStorage.getItem('username') || 'admin';
@@ -391,44 +483,98 @@
     if (unansweredLabel) unansweredLabel.innerText = "Unanswered: " + (questions.length - answeredCount);
   }
 
-  // ================== SUBMIT ==================
+  // ================== SUBMIT WITH DEBUG LOGGING ==================
   async function submitExam() {
+    addDebugLog('=== Starting exam submission ===');
+    addDebugLog(`Web App URL: ${WEB_APP_URL}`);
+    addDebugLog(`Username: ${username}`);
+    
+    // Save current answer
     saveAnswer();
+    addDebugLog('Current answer saved.');
+
+    // Check all questions answered
     const allAnswered = userAnswers.every(ans => ans !== null);
+    addDebugLog(`All answered? ${allAnswered}`);
     if (!allAnswered) {
+      addDebugLog('Submission aborted: not all questions answered.');
       alert("Please answer all questions before submitting.");
       return;
     }
-    if (!confirm("Are you sure you want to submit your exam? You cannot change answers after submission.")) return;
+    if (!confirm("Are you sure you want to submit your exam? You cannot change answers after submission.")) {
+      addDebugLog('Submission cancelled by user.');
+      return;
+    }
+    addDebugLog('User confirmed submission.');
 
+    // Disable UI
     clearInterval(timerInterval);
     const radios = document.querySelectorAll("input[type='radio']");
     for (let i = 0; i < radios.length; i++) radios[i].disabled = true;
     const btns = document.querySelectorAll(".nav-buttons button");
     for (let i = 0; i < btns.length; i++) btns[i].disabled = true;
+    addDebugLog('UI disabled.');
 
     const payload = {
       answers: userAnswers,
       username: username
     };
+    addDebugLog('Payload prepared:', payload);
 
+    const startTime = Date.now();
     try {
+      addDebugLog(`Sending fetch request to ${WEB_APP_URL}...`);
       const response = await fetch(WEB_APP_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
-      const result = await response.json();
-
+      const elapsed = Date.now() - startTime;
+      addDebugLog(`Response received in ${elapsed} ms. Status: ${response.status} ${response.statusText}`);
+      
+      // Log response headers
+      const headers = {};
+      for (let [key, value] of response.headers.entries()) {
+        headers[key] = value;
+      }
+      addDebugLog('Response headers:', headers);
+      
+      // Try to get response text (may be JSON or HTML)
+      const responseText = await response.text();
+      addDebugLog(`Response body (first 500 chars): ${responseText.substring(0, 500)}`);
+      
+      let result;
+      try {
+        result = JSON.parse(responseText);
+        addDebugLog('Response parsed as JSON:', result);
+      } catch (jsonErr) {
+        addDebugLog(`Failed to parse JSON: ${jsonErr.message}. Raw response may be HTML.`);
+        throw new Error(`Server returned non-JSON (status ${response.status}). Check Apps Script deployment.`);
+      }
+      
       if (result.status === 'success') {
+        addDebugLog(`Success! Score: ${result.score}/${result.total}`);
         alert(`Exam submitted successfully!\nYour score: ${result.score} out of ${result.total}`);
+        addDebugLog('Redirecting to homepage...');
         window.location.href = "https://canaanland-model-schools.github.io/home/index.html";
       } else {
-        throw new Error(result.message);
+        throw new Error(result.message || 'Unknown error from server');
       }
     } catch (err) {
-      alert("Error submitting exam: " + err.message);
-      // Optionally re-enable buttons here
+      const elapsed = Date.now() - startTime;
+      addDebugLog(`❌ Submission error after ${elapsed} ms:`);
+      addDebugLog(`Error name: ${err.name}`);
+      addDebugLog(`Error message: ${err.message}`);
+      if (err.stack) addDebugLog(`Stack trace: ${err.stack}`);
+      
+      // Special handling for network errors
+      if (err.message.includes('Failed to fetch')) {
+        addDebugLog('This is likely a CORS issue, network problem, or Apps Script not reachable.');
+        addDebugLog(`Check: 1) URL correct? 2) Web app published? 3) Access set to "Anyone"? 4) CORS headers set?`);
+        alert(`Network error: Could not reach the server.\n\nCheck the Debug Console for details, then click "Download Log" and share with support.`);
+      } else {
+        alert(`Error submitting exam: ${err.message}\n\nCheck Debug Console for details.`);
+      }
     }
   }
 
@@ -543,6 +689,7 @@
     countUserSelections();
     updateTheoryStatus();
     startTimer(90 * 60);
+    addDebugLog('Exam page loaded. Ready.');
   };
 </script>
 </body>
